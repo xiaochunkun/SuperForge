@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import xiaokun.forge.Forge;
+import xiaokun.forge.config.Config;
 import xiaokun.forge.config.ItemConfig;
 import xiaokun.forge.config.PlayerData;
 import xiaokun.forge.event.ForgeCommandEvent;
@@ -59,11 +60,8 @@ public class ClickEvent implements Listener {
             event.setCancelled(true);
         }
 
-
-        switch (inv.getName()) {
-            case "可锻造列表":
-                forgeAbleList(player, eItem);
-                break;
+        if (Message.getGui("GUI2").equals(inv.getName()) && (event.getClick().equals((Object) ClickType.LEFT))){
+            forgeAbleList(player, eItem);
         }
 
         if ((eItem != null)
@@ -236,11 +234,11 @@ public class ClickEvent implements Listener {
                         final ItemStack item = ItemConfig.getForgeItem(key, player.getName());
                         final ForgeItemEvent event = new ForgeItemEvent(player, item, map);
                         Bukkit.getPluginManager().callEvent(event);
+                        for (ItemStack itemStack : material.keySet()) {
+                            final int needNum = material.get(itemStack);
+                            ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
+                        }
                         if (!event.isCancelled()) {
-                            for (ItemStack itemStack : material.keySet()) {
-                                final int needNum = material.get(itemStack);
-                                ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
-                            }
                             forgedItem(event.getItemStack(), player);
                         }
                     }
@@ -248,11 +246,11 @@ public class ClickEvent implements Listener {
                         final List<String> commandList = PlaceholderAPI.setPlaceholders(player, ItemConfig.getCommand(key));
                         final ForgeCommandEvent event = new ForgeCommandEvent(player, commandList, map);
                         Bukkit.getPluginManager().callEvent(event);
+                        for (ItemStack itemStack : material.keySet()) {
+                            final int needNum = material.get(itemStack);
+                            ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
+                        }
                         if (!event.isCancelled()) {
-                            for (ItemStack itemStack : material.keySet()) {
-                                final int needNum = material.get(itemStack);
-                                ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
-                            }
                             forgeCommand(event.getCommandList(), player, key);
                         }
                     }
@@ -260,7 +258,7 @@ public class ClickEvent implements Listener {
                     cancel();
                 }
             }
-        }, 0, 100);
+        }, 0, Config.getTime());
     }
 
     /**

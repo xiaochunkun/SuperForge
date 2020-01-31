@@ -1,6 +1,7 @@
 package xiaokun.forge.config;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -93,7 +94,17 @@ public class PlayerData {
      * @return
      */
     public static ItemStack getItem(final Player player, int num) {
-        return getPlayerData(player).getItemStack("item." + String.valueOf(num));
+        ConfigurationSection section = getPlayerData(player).getConfigurationSection("item");
+        int i = 0;
+        for (String key: section.getKeys(false)){
+            if (!key.equalsIgnoreCase("num")) {
+                if (i == num) {
+                    return section.getItemStack(key);
+                }
+                i ++;
+            }
+        }
+        return null;
     }
 
     /**
@@ -103,7 +114,17 @@ public class PlayerData {
      * @return
      */
     public static ItemStack getMap(final Player player, int num) {
-        return getPlayerData(player).getItemStack("map." + String.valueOf(num));
+        ConfigurationSection section = getPlayerData(player).getConfigurationSection("map");
+        int i = 0;
+        for (String key: section.getKeys(false)){
+            if (!key.equalsIgnoreCase("num")) {
+                if (i == num) {
+                    return section.getItemStack(key);
+                }
+                i ++;
+            }
+        }
+        return null;
     }
 
     /**

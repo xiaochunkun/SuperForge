@@ -1,6 +1,7 @@
 package xiaokun.forge.config;
 
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import xiaokun.forge.Forge;
@@ -317,9 +318,9 @@ public class ItemConfig {
      * @return
      */
     public static String getKey(ItemStack item) {
-        if (item != null) {
+        if (item != null && !item.getType().equals(Material.AIR)) {
             for (Map.Entry<String, ItemStack> m : map.entrySet()) {
-                if (m.getValue().equals(item)) {
+                if (m.getValue() != null && m.getValue().equals(item)) {
                     return m.getKey();
                 }
             }

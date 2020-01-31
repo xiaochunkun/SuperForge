@@ -43,7 +43,7 @@ public class Config {
      * @return
      */
     public static String getStrengthColor(int level) {
-        String color = yml.getString("Options.strength-color").substring(level - 1, level);
+        String color = yml.getString("Options.Strength-color").substring(level - 1, level);
         String string = "";
         for (int i = 0; i < 10; i++) {
             if (i < level) {
@@ -56,4 +56,12 @@ public class Config {
         return string;
     }
 
+    /**
+     * GUI运行的时间
+     * @return
+     */
+    public static int getTime(){
+        int time = yml.getInt("Options.Time") / 27;
+        return time;
+    }
 }

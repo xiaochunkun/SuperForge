@@ -56,6 +56,7 @@ public class StudyCommand implements SubCommand {
                             }
                             if (exist) {
                                 PlayerData.addMap(player, args[2], yml);
+                                Message.playerMessage(player,Message.getMessage("StudySuccess").replace("%item%",args[2]));
                             }
                         } else {
                             Message.playerMessage(sender, Message.getMessage("NoFound"));

@@ -2,6 +2,7 @@ package xiaokun.forge.command.subcommand;
 
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,15 +29,17 @@ public class MapCommand implements SubCommand {
                             Message.playerMessage(sender, "§0-§8 --§7 ---§c ----§4 -----§b 图纸列表 §4 -----§c ----§7 ---§8 --§0 -");
                             for (int i = 0; i < list.size(); i++) {
                                 String o = list.get(i);
-                                final ItemMeta meta = ItemConfig.getMap(o).getItemMeta();
-                                String name = null;
-                                if (meta != null) {
-                                    name = meta.getDisplayName();
-                                } else {
-                                    name = o;
+                                if (ItemConfig.getMap(o) != null && !ItemConfig.getMap(o).getType().equals(Material.AIR) && ItemConfig.getMap(o).hasItemMeta()) {
+                                    final ItemMeta meta = ItemConfig.getMap(o).getItemMeta();
+                                    String name = null;
+                                    if (meta != null) {
+                                        name = meta.getDisplayName();
+                                    } else {
+                                        name = o;
+                                    }
+                                    TextComponent tc = Message.getTextComponent("§e" + String.valueOf(i + 1) + ". §a" + name, "/dz map give " + o, meta.getLore());
+                                    Message.sendTextComponent(sender, tc);
                                 }
-                                TextComponent tc = Message.getTextComponent("§e" + String.valueOf(i + 1) + ". §a" + name, "/dz map give " + o, meta.getLore());
-                                Message.sendTextComponent(sender, tc);
                             }
                         } else {
                             Message.playerMessage(sender, "§4暂无图纸信息");

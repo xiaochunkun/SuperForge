@@ -27,6 +27,7 @@ public class CommandHandler implements CommandExecutor {
         registerCommand("item", new ItemCommand());
         registerCommand("level", new LevelCommand());
         registerCommand("study",new StudyCommand());
+        registerCommand("console",new ConsoleCommand());
     }
 
     /**
