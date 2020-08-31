@@ -6,7 +6,7 @@
 
     <groupId>xiaokun</groupId>
     <artifactId>SuperForge</artifactId>
-    <version>1.8.1</version>
+    <version>1.8.4</version>
     <packaging>jar</packaging>
 
     <name>SuperForge</name>
@@ -60,6 +60,12 @@
         </repository>
 
         <repository>
+                <id>minecraft</id>
+                <name>Minecraft Repository</name>
+                <url>http://148.70.122.12/repository/minecraft/</url>
+        </repository>
+
+        <repository>
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
@@ -73,10 +79,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.12.2</version>
         </dependency>
         <dependency>
             <groupId>me.clip</groupId>

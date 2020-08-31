@@ -30,6 +30,7 @@ public class CreateInventory {
 
     /**
      * GUI 的所在位置
+     *
      * @param type
      * @param player
      * @return
@@ -117,22 +118,20 @@ public class CreateInventory {
         if (type == 3) {
             inv = Bukkit.createInventory(null, 54, Message.getGui("GUI4"));
             int num = PlayerData.getItemNum(player);
+            setInventory(inv, "item");
             for (int i = 0; i < num; i++) {
                 if (i < (itemNum * 45)) {
-                    if (PlayerData.getItem(player, ((itemNum - 1) * 45) + i) != null) {
-                        ItemStack item = PlayerData.getItem(player, ((itemNum - 1) * 45) + i);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                inv.addItem(item);
-                            }
-                        }.runTask(plugin);
-                    }
+                    int finalI = i;
+                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                        ItemStack item = PlayerData.getItem(player, ((itemNum - 1) * 45) + finalI);
+                        if (item != null) {
+                            inv.addItem(item);
+                        }
+                    }, 10L);
                 } else {
                     break;
                 }
             }
-            setInventory(inv, "item");
             return inv;
         }
         return null;
@@ -140,6 +139,7 @@ public class CreateInventory {
 
     /**
      * 设置Gui的内容
+     *
      * @param inv
      * @param type
      */
@@ -187,6 +187,7 @@ public class CreateInventory {
 
     /**
      * 设置物品的页数
+     *
      * @param itemNums
      */
     public static void setItemNum(int itemNums) {
@@ -197,6 +198,7 @@ public class CreateInventory {
 
     /**
      * 设置图纸的页数
+     *
      * @param mapNums
      */
     public static void setMapNum(int mapNums) {

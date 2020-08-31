@@ -174,6 +174,10 @@ public class PlayerData {
         }
     }
 
+    public static String getLevelName(final  Player player){
+        return LevelConfig.getName(String.valueOf(PlayerData.getLevel(player)));
+    }
+
     /**
      * 给玩家添加等级
      * @param player

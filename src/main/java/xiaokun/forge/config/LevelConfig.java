@@ -71,4 +71,9 @@ public class LevelConfig {
     public static int getExp(String level) {
         return yml.getInt("Level." + level + ".exp");
     }
+
+    public static String getName(String level){
+        return yml.getString("Level." + level + ".name");
+
+    }
 }

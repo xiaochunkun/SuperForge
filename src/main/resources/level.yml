@@ -18,28 +18,28 @@ Quality: #锻造物品 品质 配置
   '粗糙':
     mix: 0
     max: 0.78
-    attribute: '%强度% * 0.5' #属性计算
+    attribute: '%预设值% + %强度% * 1' #属性计算
   '普通':
     mix: 0.78
     max: 0.85
-    attribute: '%强度% * 0.65'
+    attribute: '%预设值% + %强度% * 2'
   '精致':
     mix: 0.85
     max: 0.9
-    attribute: '%强度% * 0.8'
+    attribute: '%预设值% + %强度% * 3'
   '优良':
     mix: 0.9
     max: 0.93
-    attribute: '%强度% * 0.95'
+    attribute: '%预设值% + %强度% * 4'
   '史诗':
     mix: 0.93
     max: 0.96
-    attribute: '%强度% * 1.1'
+    attribute: '%预设值% + %强度% * 5'
   '传说':
     mix: 0.96
     max: 0.99
-    attribute: '%强度% * 1.25'
+    attribute: '%预设值% + %强度% * 6'
   '逆天':
     mix: 0.99
     max: 1
-    attribute: '%强度% * 1.4'
+    attribute: '%预设值% + %强度% * 7'

@@ -81,19 +81,6 @@ public class ItemUtil {
         String level = LevelConfig.getQuality();
         String attribute = LevelConfig.getAttribute(level);
         int strengthLevel = (int) (1 + Math.random() * 10);
-        String formula = attribute.replaceAll("%强度%", String.valueOf(strengthLevel));
-        ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
-        double math = 0;
-
-        if (isNumeric(formula)) {
-            math = Double.valueOf(formula);
-        } else {
-            try {
-                math = (Double) jse.eval(formula);
-            } catch (ScriptException e) {
-                e.printStackTrace();
-            }
-        }
 
         String Strength = Config.getStrengthColor(strengthLevel);
         for (String key : lore) {
@@ -112,9 +99,25 @@ public class ItemUtil {
             if (key.contains("<f:") && key.contains(">")) {
                 List<String> lists = getStringList("<f:", ">", key);
                 if (lists.size() >= 2) {
-                    key = key.replaceAll("<f:" + lists.get(1) + ">", String.valueOf((int) (Double.valueOf(lists.get(1)) * math)));
+
+                    String formula = attribute.replaceAll("%强度%", String.valueOf(strengthLevel)).replaceAll("%预设值%",lists.get(1));
+                    double math;
+                    if (isNumeric(formula)) {
+                        math = Double.parseDouble(formula);
+                    } else {
+                        math = MathUtil.arithmetic(formula);
+                    }
+
+                    key = key.replaceAll("<f:" + lists.get(1) + ">", String.valueOf((int) (math)));
                 }
-                key = key.replaceAll("<f:" + lists.get(0) + ">", String.valueOf((int) (Double.valueOf(lists.get(0)) * math)));
+                String formula = attribute.replaceAll("%强度%", String.valueOf(strengthLevel)).replaceAll("%预设值%",lists.get(0));
+                double math;
+                if (isNumeric(formula)) {
+                    math = Double.parseDouble(formula);
+                } else {
+                    math = MathUtil.arithmetic(formula);
+                }
+                key = key.replaceAll("<f:" + lists.get(0) + ">", String.valueOf((int) (math)));
             }
 
             list.add(key);

@@ -47,21 +47,24 @@ public class PAPI extends PlaceholderExpansion {
         if (player == null) {
             return "";
         }
-        if (identifier.equals("level")) {
+        if (identifier.equalsIgnoreCase("level")) {
             return String.valueOf(PlayerData.getLevel(player));
         }
-        if (identifier.equals("exp")) {
+        if (identifier.equalsIgnoreCase("exp")) {
             return String.valueOf(PlayerData.getExp(player));
         }
-        if (identifier.equals("needExp")) {
+        if (identifier.equalsIgnoreCase("needExp")) {
             if (LevelConfig.getExp(String.valueOf(PlayerData.getLevel(player))) > 0) {
                 return String.valueOf(LevelConfig.getExp(String.valueOf(PlayerData.getLevel(player))) - PlayerData.getExp(player));
             } else {
                 return "0";
             }
         }
-        if (identifier.equals("nextLevel")) {
+        if (identifier.equalsIgnoreCase("nextLevel")) {
             return String.valueOf(LevelConfig.getExp(String.valueOf(PlayerData.getLevel(player))));
+        }
+        if (identifier.equalsIgnoreCase("name")) {
+            return PlayerData.getLevelName(player);
         }
         return null;
     }

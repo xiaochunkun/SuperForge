@@ -60,7 +60,7 @@ public class ClickEvent implements Listener {
             event.setCancelled(true);
         }
 
-        if (Message.getGui("GUI2").equals(inv.getName()) && (event.getClick().equals((Object) ClickType.LEFT))){
+        if (Message.getGui("GUI2").equals(inv.getName()) && (event.getClick().equals((Object) ClickType.LEFT))) {
             forgeAbleList(player, eItem);
         }
 
@@ -74,6 +74,7 @@ public class ClickEvent implements Listener {
             click(player, inv, eMeta);
         }
     }
+
 
     private void click(Player player, Inventory inv, ItemMeta eMeta) {
         switch (eMeta.getDisplayName()) {
@@ -136,6 +137,7 @@ public class ClickEvent implements Listener {
      */
     private void forgeAbleList(Player player, ItemStack eItem) {
         pInv = CreateInventory.getInventory(2, player);
+        assert pInv != null;
         pInv.setItem(19, eItem);
         String key = ItemConfig.getKey(eItem);
         if (key != null) {
@@ -196,6 +198,10 @@ public class ClickEvent implements Listener {
                     }
                 }
                 if (confirm) {
+                    for (ItemStack itemStack : material.keySet()) {
+                        final int needNum = material.get(itemStack);
+                        ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
+                    }
                     forgingProcess(player, key, map, material);
                 } else {
                     Message.playerMessage(player, Message.getMessage("NoMaterial"));
@@ -234,10 +240,6 @@ public class ClickEvent implements Listener {
                         final ItemStack item = ItemConfig.getForgeItem(key, player.getName());
                         final ForgeItemEvent event = new ForgeItemEvent(player, item, map);
                         Bukkit.getPluginManager().callEvent(event);
-                        for (ItemStack itemStack : material.keySet()) {
-                            final int needNum = material.get(itemStack);
-                            ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
-                        }
                         if (!event.isCancelled()) {
                             forgedItem(event.getItemStack(), player);
                         }
@@ -246,10 +248,6 @@ public class ClickEvent implements Listener {
                         final List<String> commandList = PlaceholderAPI.setPlaceholders(player, ItemConfig.getCommand(key));
                         final ForgeCommandEvent event = new ForgeCommandEvent(player, commandList, map);
                         Bukkit.getPluginManager().callEvent(event);
-                        for (ItemStack itemStack : material.keySet()) {
-                            final int needNum = material.get(itemStack);
-                            ItemUtil.removeItem(player.getInventory(), itemStack, needNum);
-                        }
                         if (!event.isCancelled()) {
                             forgeCommand(event.getCommandList(), player, key);
                         }
@@ -273,9 +271,9 @@ public class ClickEvent implements Listener {
                 if (player.isOp()) {
                     for (String command : commandList) {
                         if (command.contains("[command]")) {
-                            command = command.replace("[command]","");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command);
-                        }else {
+                            command = command.replace("[command]", "");
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        } else {
                             player.performCommand(command);
                         }
                     }
@@ -283,9 +281,9 @@ public class ClickEvent implements Listener {
                     player.setOp(true);
                     for (String command : commandList) {
                         if (command.contains("[command]")) {
-                            command = command.replace("[command]","");
-                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),command);
-                        }else {
+                            command = command.replace("[command]", "");
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+                        } else {
                             player.performCommand(command);
                         }
                     }
@@ -319,13 +317,12 @@ public class ClickEvent implements Listener {
         File file = PlayerData.getPlayerFile(player);
         YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
         int num = PlayerData.getItemNum(player);
-        yml.set("item." + String.valueOf(num), itemStack);
+        yml.set("item." + num, itemStack);
         yml.set("item.num", ++num);
         try {
             yml.save(file);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
     }
 }
