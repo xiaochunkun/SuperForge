@@ -1,0 +1,45 @@
+Level: #锻造师 等级 配置
+  1:
+    exp: 50
+    name: '见习锻造师'
+  2:
+    exp: 100
+    name: '正式锻造师'
+  3:
+    exp: 150
+    name: '初级锻造师'
+  4:
+    exp: 250
+    name: '中级锻造师'
+  5:
+    exp: 350
+    name: '终极锻造师'
+Quality: #锻造物品 品质 配置
+  '粗糙':
+    mix: 0
+    max: 0.78
+    attribute: '%预设值% + %强度% * 1' #属性计算
+  '普通':
+    mix: 0.78
+    max: 0.85
+    attribute: '%预设值% + %强度% * 2'
+  '精致':
+    mix: 0.85
+    max: 0.9
+    attribute: '%预设值% + %强度% * 3'
+  '优良':
+    mix: 0.9
+    max: 0.93
+    attribute: '%预设值% + %强度% * 4'
+  '史诗':
+    mix: 0.93
+    max: 0.96
+    attribute: '%预设值% + %强度% * 5'
+  '传说':
+    mix: 0.96
+    max: 0.99
+    attribute: '%预设值% + %强度% * 6'
+  '逆天':
+    mix: 0.99
+    max: 1
+    attribute: '%预设值% + %强度% * 7'

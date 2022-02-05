@@ -1,0 +1,28 @@
+name: SuperForge
+version: ${project.version}
+main: xiaokun.forge.Forge
+depend: [PlaceholderAPI]
+softdepend:
+  - MythicMobs
+authors: [XiaoKun]
+commands:
+  dz:
+    aliases:
+      - duanzao
+permissions:
+  dz.use:
+    default: true
+  dz.item:
+    default: op
+  dz.add:
+    default: op
+  dz.set:
+    default: op
+  dz.map:
+    default: op
+  dz.material:
+    default: op
+  dz.reload:
+    default: op
+  dz.study:
+    default: op
